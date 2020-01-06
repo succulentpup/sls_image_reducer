@@ -58,7 +58,7 @@
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
       "pre-commit": "yarn lintAndSyntaxCheck",
-      "pre-push": "yarn test:unit"
+      "pre-push": "yarn test"
     }
   },
   "config": {
