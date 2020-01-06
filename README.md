@@ -1,2 +1,1 @@
-# sls_image_reducer
-Sample application using the service template
+Image reducer is a backend application implemeted using nodejs on serverless.com framework. <br>
