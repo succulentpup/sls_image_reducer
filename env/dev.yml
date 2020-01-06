@@ -1,6 +1,6 @@
 ROOT_DOMAIN: in
 DOMAIN: aspirex
-SUBDOMAIN: api
+SUBDOMAIN: sampleapp
 DEBUG: true
 TRACE: true
 
