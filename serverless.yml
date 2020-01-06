@@ -1,5 +1,5 @@
 service:
-  name: backend-service-template-nodejs # ChangeIt
+  name: image-resizer
 
 plugins:
   - serverless-webpack
