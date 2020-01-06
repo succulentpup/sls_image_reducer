@@ -10,7 +10,7 @@ plugins:
 provider:
   name: aws
   runtime: nodejs10.x
-#  profile: personal-sandbox # ChangeIt
+  profile: personal-sandbox # ChangeIt
   region: ap-south-1 # ChangeIt
   stage: ${opt:stage, 'dev'}
 
