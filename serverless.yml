@@ -37,6 +37,15 @@ functions: # add your functions
       - http:
           method: get
           path: health
+  resizeHandler:
+    handler: src/resizeHandler.resizeHandler
+    events:
+      - s3:
+          bucket: image-resizer-xpparel
+          event: s3:ObjectCreated:*
+          rules:
+            - prefix: uploads/
+            - suffix: .jpeg
 
 resources:
   # Output
