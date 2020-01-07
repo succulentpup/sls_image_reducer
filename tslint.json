@@ -51,9 +51,7 @@
       "variables-before-functions"
     ],
     "newline-per-chained-call": false,
-    "no-console": {
-      "options": ["log"]
-    },
+    "no-console": false,
     "no-switch-case-fall-through": true,
     "strict-boolean-expressions": [false, "allow-boolean-or-undefined"],
     "switch-default": true,
