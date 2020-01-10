@@ -25,7 +25,10 @@
     "delete_domain": "sls delete_domain --stage dev"
   },
   "dependencies": {
-    "got": "^10.2.0"
+    "@types/jimp": "^0.2.28",
+    "aws-sdk": "^2.600.0",
+    "got": "^10.2.0",
+    "jimp": "^0.9.3"
   },
   "jest": {
     "testEnvironment": "node"
