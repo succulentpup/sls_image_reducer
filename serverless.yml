@@ -33,18 +33,50 @@ custom:
 functions: # add your functions
   health:
     handler: src/health.health
+    name: ${self:service.name}-${self:provider.stage}-health
+    descptions: default end point used to return the status of health
     events:
       - http:
           method: get
           path: health
   resizeHandler:
     handler: src/resizeHandler.resizeHandler
+    name: ${self:service.name}-${self:provider.stage}-resizeHandler
+    description: will get triggered when a jpeg image is uploaded or renamed in uploads floder.
+    environment:
+      UPLOADS_FOLDER: 'uploads/'
+      THUMBNAILS_FOLDER: 'thumbnails/'
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - "S3:ListBucket"
+          - "S3:GetObject"
+          - "S3:PutObject"
+        Resource: arn:aws:s3:::thumbnails-xpparel/*
     events:
       - s3:
-          bucket: image-resizer-xpparel
+          bucket: thumbnails-xpparel
           event: s3:ObjectCreated:*
           rules:
             - prefix: uploads/
+            - suffix: .jpeg
+  thumbnailsDetails:
+    handler: src/thumbnailsDetails.thumbnailsDetails
+    name: ${self:service.name}-${self:provider.stage}-thumbnailsDetails
+    description: will get triggered when a jpeg image is uploaded or renamed in uploads floder.
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - "S3:ListBucket"
+          - "S3:GetObject"
+          - "S3:PutObject"
+        Resource: arn:aws:s3:::thumbnails-xpparel/thumbnaisl/*
+    events:
+      - s3:
+          bucket: thumbnails-xpparel
+          event: s3:ObjectCreated:*
+          rules:
+            - prefix: thumbnails/
             - suffix: .jpeg
 
 resources:
