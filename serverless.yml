@@ -63,14 +63,14 @@ functions: # add your functions
   thumbnailsDetails:
     handler: src/thumbnailsDetails.thumbnailsDetails
     name: ${self:service.name}-${self:provider.stage}-thumbnailsDetails
-    description: will get triggered when a jpeg image is uploaded or renamed in uploads floder.
+    description: will get triggered when a jpeg image is uploaded or renamed in thumbnails floder.
     iamRoleStatements:
       - Effect: Allow
         Action:
           - "S3:ListBucket"
           - "S3:GetObject"
           - "S3:PutObject"
-        Resource: arn:aws:s3:::thumbnails-xpparel/thumbnaisl/*
+        Resource: arn:aws:s3:::thumbnails-xpparel/thumbnails/*
     events:
       - s3:
           bucket: thumbnails-xpparel
