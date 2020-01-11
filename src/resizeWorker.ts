@@ -22,7 +22,7 @@ const replacePrefix = (key: string, uploadsFolder: string, thumbnailsFolder: str
     return key.replace(uploadPrefix, thumbnailsPrefix);
 };
 
-const resizer = (data: Buffer, height: number): Promise<Buffer> => {
+const resizer = async (data: Buffer, height: number): Promise<Buffer> => {
     console.log('inside resizer', data);
     return Jimp.read(data)
         .then((image) =>
