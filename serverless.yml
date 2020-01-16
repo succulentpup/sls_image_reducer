@@ -46,6 +46,8 @@ functions: # add your functions
     environment:
       UPLOADS_FOLDER: 'uploads/'
       THUMBNAILS_FOLDER: 'thumbnails/'
+      META_TABLE_NAME:
+        Ref: ImagesTable
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -53,6 +55,15 @@ functions: # add your functions
           - "S3:GetObject"
           - "S3:PutObject"
         Resource: arn:aws:s3:::thumbnails-xpparel/*
+      - Effect: Allow
+        Action:
+          - "dynamodb:Scan"
+          - "dynamodb:GetItem"
+          - "dynamodb:PutItem"
+          - "dynamodb:UpdateItem"
+          - "dynamodb:DeleteItem"
+        Resource:
+          - '#{ImagesTable.Arn}'
     events:
       - s3:
           bucket: thumbnails-xpparel
@@ -60,6 +71,12 @@ functions: # add your functions
           rules:
             - prefix: uploads/
             - suffix: .jpeg
+      - s3:
+          bucket: thumbnails-xpparel
+          event: s3:ObjectCreated:*
+          rules:
+            - prefix: uploads/
+            - suffix: .jpg
   thumbnailsDetails:
     handler: src/thumbnailsDetails.thumbnailsDetails
     name: ${self:service.name}-${self:provider.stage}-thumbnailsDetails
@@ -82,3 +99,4 @@ functions: # add your functions
 resources:
   # Output
   - ${file(InfrastructureResources/outputs.yml)}
+  - ${file(InfrastructureResources/dynamoDB.yml)}

@@ -1,0 +1,14 @@
+Resources:
+  ImagesTable:
+    Type: "AWS::DynamoDB::Table"
+    Properties:
+      BillingMode: PROVISIONED
+      AttributeDefinitions:
+        - AttributeName: "imageId"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "imageId"
+          KeyType: "HASH"
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
