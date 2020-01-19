@@ -116,7 +116,7 @@ functions: # add your functions
     events:
       - http:
           method: POST
-          path: /register
+          path: /token
           private: true
 
 resources:
