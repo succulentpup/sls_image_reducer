@@ -13,6 +13,16 @@ provider:
   profile: personal-sandbox # ChangeIt
   region: ap-south-1 # ChangeIt
   stage: ${opt:stage, 'dev'}
+  apiKeys:
+    - thumbnailGenerator
+  usagePlan:
+    quota:
+      limit: 1000
+      offset: 0
+      period: DAY
+    throttle:
+      burstLimit: 15
+      rateLimit: 15
 
 custom:
   env: ${file(./env/${self:provider.stage}.yml)} # ChangeIt
@@ -24,6 +34,8 @@ custom:
     stage: ${self:provider.stage}
     createRoute53Record: true
     endpointType: 'regional' # ChangeIt
+  globalParameters:
+    thumbnailGeneratorSecretToken: ${ssm:/sampleapp-thumbnailGenerator}
   webpack:
     packager: npm
     includeModules:
@@ -95,6 +107,17 @@ functions: # add your functions
           rules:
             - prefix: thumbnails/
             - suffix: .jpeg
+  authorizationHandler:
+    handler: src/authorizationHandler.authorizationHandler
+    name: ${self:service.name}-${self:provider.stage}-authorizationHandler
+    description: generates jwt token
+    environment:
+      APP_SECRET: ${self:custom.globalParameters.thumbnailGeneratorSecretToken}
+    events:
+      - http:
+          method: POST
+          path: /register
+          private: true
 
 resources:
   # Output

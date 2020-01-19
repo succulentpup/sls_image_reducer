@@ -14,18 +14,17 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
     "strictNullChecks": true,
     "esModuleInterop": true,
     "baseUrl": "src",
     "paths": {
-      "types/*": ["@types/*"],
+      "types/*": ["types/*"],
       "helpers/*": ["helpers/*"],
       "packageJson": ["../package.json"]
     },
     "resolveJsonModule": true
   },
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }
 
