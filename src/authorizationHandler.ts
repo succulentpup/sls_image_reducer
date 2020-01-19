@@ -11,6 +11,6 @@ export const authorizationHandler: APIGatewayProxyHandler = async (event: APIGat
     try {
         return Promise.resolve(buildRespectObject(status('OK'), { token: generateToken(event.body, APP_SECRET!) }));
     } catch (e) {
-       return Promise.resolve(buildRespectObject(status('Bad Request'), e));
+        return Promise.resolve(buildRespectObject(status('Bad Request'), { message: JSON.stringify(e) }));
     }
 };

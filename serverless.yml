@@ -118,6 +118,8 @@ functions: # add your functions
           method: POST
           path: /token
           private: true
+  authorize:
+    handler: src/auth/authoriser.authorize
 
 resources:
   # Output
