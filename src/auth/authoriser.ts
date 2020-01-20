@@ -7,7 +7,7 @@ import {
 import * as jwt from 'jsonwebtoken';
 
 const { APP_SECRET } = process.env;
-export const generateToken = (jsonToSign: string | null, secret: string) => jwt.sign(jsonToSign || { }, secret);
+export const generateToken = (jsonToSign: object, secret: string) => jwt.sign(jsonToSign || { }, secret);
 const verifyToken = (token: string, secret: string) => jwt.verify(token, secret);
 const buildPolicy = (effect: string, action: string, methodArn: string): PolicyDocument =>
     ({
@@ -34,7 +34,7 @@ const generatePolicy = (token: string, methodArn: string): CustomAuthorizerResul
     };
 };
 
-export const authorize: CustomAuthorizerHandler = (event: CustomAuthorizerEvent): Promise<CustomAuthorizerResult> => {
+export const authorize: CustomAuthorizerHandler = async (event: CustomAuthorizerEvent): Promise<CustomAuthorizerResult> => {
     try {
         return Promise.resolve(generatePolicy(event.authorizationToken!, event.methodArn));
     } catch (e) {

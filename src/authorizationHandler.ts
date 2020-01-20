@@ -7,9 +7,21 @@ import { buildRespectObject } from './helpers/buildResponseObject';
 
 const { APP_SECRET } = process.env;
 
+interface InputObj {
+    userName: string;
+    secret: string;
+}
+
 export const authorizationHandler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult>  => {
     try {
-        return Promise.resolve(buildRespectObject(status('OK'), { token: generateToken(event.body, APP_SECRET!) }));
+        if (!event.body)
+            return Promise.resolve(buildRespectObject(status('Bad Request'), { message: 'event body cant be empty' }));
+        // tslint:disable-next-line no-unsafe-any
+        const { userName, secret }: InputObj = JSON.parse(event.body);
+        console.log(`userName: ${userName}, secret: ${secret}`);
+        if (!userName || !secret)
+            return Promise.resolve(buildRespectObject(status('Bad Request'), { message: 'userName or secret cant be empty' }));
+        return Promise.resolve(buildRespectObject(status('OK'), { token: generateToken({ userName, secret }, APP_SECRET!) }));
     } catch (e) {
         return Promise.resolve(buildRespectObject(status('Bad Request'), { message: JSON.stringify(e) }));
     }
