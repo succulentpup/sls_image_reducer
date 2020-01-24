@@ -12,7 +12,7 @@ interface InputObj {
     secret: string;
 }
 
-export const authorizationHandler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult>  => {
+export const generateTokenFun: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult>  => {
     try {
         if (!event.body)
             return Promise.resolve(buildRespectObject(status('Bad Request'), { message: 'event body cant be empty' }));

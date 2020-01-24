@@ -51,6 +51,7 @@ functions: # add your functions
       - http:
           method: get
           path: health
+          authorizer: authorize
   resizeHandler:
     handler: src/resizeHandler.resizeHandler
     name: ${self:service.name}-${self:provider.stage}-resizeHandler
@@ -107,9 +108,9 @@ functions: # add your functions
           rules:
             - prefix: thumbnails/
             - suffix: .jpeg
-  authorizationHandler:
-    handler: src/authorizationHandler.authorizationHandler
-    name: ${self:service.name}-${self:provider.stage}-authorizationHandler
+  generateToken:
+    handler: src/generateToken.generateTokenFun
+    name: ${self:service.name}-${self:provider.stage}-generateToken
     description: generates jwt token
     environment:
       APP_SECRET: ${self:custom.globalParameters.thumbnailGeneratorSecretToken}
@@ -118,6 +119,10 @@ functions: # add your functions
           method: POST
           path: /token
           private: true
+  authorize:
+    environment:
+      APP_SECRET: ${self:custom.globalParameters.thumbnailGeneratorSecretToken}
+    handler: src/auth/authoriser.authorize
 
 resources:
   # Output
