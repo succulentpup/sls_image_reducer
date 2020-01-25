@@ -19,8 +19,8 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "test:unit": "jest --config ./jestConfig/unit/config.js",
-    "test:endpoint": "jest --config ./jestConfig/endpoint/config.js",
-    "test": "yarn test:unit && yarn test:endpoint",
+    "test:auth": "jest --config ./jestConfig/endpoint-auth/config.js",
+    "test": "yarn test:unit && yarn test:auth",
     "create_domain": "sls create_domain",
     "delete_domain": "sls delete_domain --stage dev"
   },

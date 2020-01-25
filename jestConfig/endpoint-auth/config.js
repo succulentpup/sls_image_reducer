@@ -1,7 +1,7 @@
 module.exports = {
     rootDir:'../../',
     roots: [
-        '<rootDir>/src/tests/endpoint',
+        '<rootDir>/src/tests/endpoint-auth',
     ],
     coverageDirectory: '<rootDir>/jest/coverage',
     transform: {
