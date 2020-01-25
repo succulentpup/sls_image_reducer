@@ -52,6 +52,30 @@ functions: # add your functions
           method: get
           path: health
           authorizer: authorize
+  getImageMetaData:
+    handler: src/getImageMetaData.getImageMetaData
+    name: ${self:service.name}-${self:provider.stage}-getImageMetaData
+    descptions: this end point fetches the metadata of a given image name
+    environment:
+      META_TABLE_NAME:
+        Ref: ImagesTable
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - "S3:ListBucket"
+          - "S3:GetObject"
+        Resource: arn:aws:s3:::thumbnails-xpparel/*
+      - Effect: Allow
+        Action:
+          - "dynamodb:Scan"
+          - "dynamodb:GetItem"
+        Resource:
+          - '#{ImagesTable.Arn}'
+    events:
+      - http:
+          method: get
+          path: /image/{name}/metadata
+          authorizer: authorize
   resizeHandler:
     handler: src/resizeHandler.resizeHandler
     name: ${self:service.name}-${self:provider.stage}-resizeHandler
@@ -78,18 +102,19 @@ functions: # add your functions
         Resource:
           - '#{ImagesTable.Arn}'
     events:
-      - s3:
-          bucket: thumbnails-xpparel
-          event: s3:ObjectCreated:*
-          rules:
-            - prefix: uploads/
-            - suffix: .jpeg
+# only .jpg is supported in this sample app
       - s3:
           bucket: thumbnails-xpparel
           event: s3:ObjectCreated:*
           rules:
             - prefix: uploads/
             - suffix: .jpg
+#      - s3:
+#          bucket: thumbnails-xpparel
+#          event: s3:ObjectCreated:*
+#          rules:
+#            - prefix: uploads/
+#            - suffix: .jpeg
   thumbnailsDetails:
     handler: src/thumbnailsDetails.thumbnailsDetails
     name: ${self:service.name}-${self:provider.stage}-thumbnailsDetails
