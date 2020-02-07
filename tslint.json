@@ -13,7 +13,7 @@
     "no-parameter-properties": false,
     "no-parameter-reassignment": false,
     "no-redundant-jsdoc": false,
-    "no-implicit-dependencies": [true, ["aws-lambda", "aws-sdk", "aws-sdk-mock", "helpers", "types", "@mysense/types", "@mysense/auth-test-framework", "packageJson"]],
+    "no-implicit-dependencies": [true, ["aws-lambda", "aws-sdk", "aws-sdk-mock", "helpers", "types", "packageJson"]],
     "comment-format": [
       true,
       "check-space"
